@@ -9,7 +9,7 @@ This package greatly simplifies the process. It will accept webhook submissions 
 Via Composer
 
 ``` bash
-$ composer require sts/laravel-email-events
+$ composer require stechstudio/laravel-email-events
 ```
 
 ## Quick start
