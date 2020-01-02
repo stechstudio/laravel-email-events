@@ -103,10 +103,6 @@ class SendGrid extends AbstractAdapter
      */
     public function getResponse()
     {
-        if ($this->getAction() == EmailEvent::EVENT_BOUNCED) {
-            return Arr::get($this->payload, 'reason');
-        }
-
         return Arr::get($this->payload, 'response', Arr::get($this->payload, 'useragent'));
     }
 
@@ -115,9 +111,7 @@ class SendGrid extends AbstractAdapter
      */
     public function getCode()
     {
-        if ($this->getAction() == EmailEvent::EVENT_BOUNCED) {
-            return Arr::get($this->payload, 'status');
-        }
+        return Arr::get($this->payload, 'status');
     }
 
     /**
@@ -125,12 +119,7 @@ class SendGrid extends AbstractAdapter
      */
     public function getReason()
     {
-        if ($this->getAction() == EmailEvent::EVENT_BOUNCED) {
-            return Arr::get($this->payload, 'type');
-        }
-        if ($this->getAction() == EmailEvent::EVENT_DROPPED) {
-            return Arr::get($this->payload, 'reason');
-        }
+        return Arr::get($this->payload, 'reason');
     }
 
     /**
