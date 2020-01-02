@@ -63,7 +63,7 @@ class EmailEvents
     {
         return is_callable($auth)
             ? $auth
-            : resolve(Arr::get($this->config, "authorizers.$auth"));
+            : app(Arr::get($this->config, "authorizers.$auth"));
     }
 
     /**
