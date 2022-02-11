@@ -3,7 +3,6 @@
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/stechstudio/laravel-email-events.svg?style=flat-square)](https://packagist.org/packages/stechstudio/laravel-email-events)
 [![Build Status](https://img.shields.io/travis/stechstudio/laravel-email-events/master.svg?style=flat-square)](https://travis-ci.org/stechstudio/laravel-email-events)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
-[![Quality Score](https://img.shields.io/scrutinizer/g/stechstudio/laravel-email-events.svg?style=flat-square)](https://scrutinizer-ci.com/g/stechstudio/laravel-email-events)
 
 So you have your Laravel app sending email out through SendGrid or Mailgun or Postmark, super. Now you want to capture webhooks and react to email events, such as deliveries or bounces. This is where it can get a bit messy, authorizing the webhook submission, parsing the payload, handling the details... and then of course you've tied yourself to one particular email provider.
 
