@@ -1,1 +1,1 @@
-C:37:"PHPUnit\Runner\DefaultTestResultCache":258:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:3:{s:58:"STS\EmailEvents\Tests\BasicHttpAuthTest::testBasicHttpAuth";d:0.04;s:52:"STS\EmailEvents\Tests\TokenAuthTest::testSimpleToken";d:0.002;s:57:"STS\EmailEvents\Tests\TokenAuthTest::testCustomTokenParam";d:0.002;}}}
+{"version":1,"defects":[],"times":{"STS\\EmailEvents\\Tests\\BasicHttpAuthTest::testBasicHttpAuth":0.029,"STS\\EmailEvents\\Tests\\TokenAuthTest::testSimpleToken":0.002,"STS\\EmailEvents\\Tests\\TokenAuthTest::testCustomTokenParam":0.002}}
