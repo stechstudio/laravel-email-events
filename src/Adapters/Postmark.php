@@ -39,7 +39,7 @@ class Postmark extends AbstractAdapter
             return $this->eventMap[ Arr::get($this->payload, 'Type') ];
         }
 
-        return array_get($this->eventMap, Arr::get($this->payload, 'RecordType'));
+        return Arr::get($this->eventMap, Arr::get($this->payload, 'RecordType'));
     }
 
     /**
