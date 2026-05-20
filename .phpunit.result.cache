@@ -1,1 +1,0 @@
-{"version":1,"defects":[],"times":{"STS\\EmailEvents\\Tests\\BasicHttpAuthTest::testBasicHttpAuth":0.029,"STS\\EmailEvents\\Tests\\TokenAuthTest::testSimpleToken":0.002,"STS\\EmailEvents\\Tests\\TokenAuthTest::testCustomTokenParam":0.002}}
