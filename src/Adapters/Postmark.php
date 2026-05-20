@@ -47,8 +47,8 @@ class Postmark extends AbstractAdapter
      */
     public function getRecipient()
     {
-        return Arr::get($this->payload, 'Recipient');
-
+        return Arr::get($this->payload, 'Recipient')
+            ?? Arr::get($this->payload, 'Email');
     }
 
     /**

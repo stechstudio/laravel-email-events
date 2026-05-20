@@ -27,7 +27,7 @@ class PostmarkAdapterTest extends TestCase
             'Type'       => 'HardBounce',
             'TypeCode'   => 1,
             'MessageID'  => 'postmark-message-2',
-            'Recipient'  => 'recipient@example.com',
+            'Email'      => 'recipient@example.com',
             'BouncedAt'  => '2021-01-01T00:00:00Z',
             'Details'    => 'mailbox does not exist',
         ];
@@ -63,6 +63,15 @@ class PostmarkAdapterTest extends TestCase
         $this->assertSame(EmailEvent::EVENT_BOUNCED, $adapter->getAction());
         $this->assertSame('HardBounce', $adapter->getReason());
         $this->assertSame(1, $adapter->getCode());
+    }
+
+    public function testBounceRecipientFallsBackToEmailField()
+    {
+        $adapter = new Postmark($this->bouncePayload());
+
+        $this->assertSame('recipient@example.com', $adapter->getRecipient());
+        $this->assertTrue($adapter->isValid());
+        $this->assertInstanceOf(EmailEvent::class, EmailEvent::create($adapter));
     }
 
     public function testTransientBounceMapsToDeferred()
