@@ -112,6 +112,56 @@ class PostmarkAdapterTest extends TestCase
             'response'  => 'smtp;250 OK',
             'reason'    => null,
             'code'      => null,
+            'bounceType' => null,
         ], $event->toArray());
+    }
+
+    public function testBounceTypeNullForNonBounce()
+    {
+        $adapter = new Postmark($this->deliveryPayload());
+
+        $this->assertNull($adapter->getBounceType());
+        $this->assertFalse($adapter->isPermanent());
+    }
+
+    public function testHardBounceClassification()
+    {
+        $adapter = new Postmark($this->bouncePayload());
+
+        $this->assertSame(EmailEvent::BOUNCE_HARD, $adapter->getBounceType());
+        $this->assertTrue($adapter->isPermanent());
+    }
+
+    public function testSoftBounceClassification()
+    {
+        $payload = $this->bouncePayload();
+        $payload['Type'] = 'SoftBounce';
+
+        $adapter = new Postmark($payload);
+
+        $this->assertSame(EmailEvent::BOUNCE_SOFT, $adapter->getBounceType());
+        $this->assertFalse($adapter->isPermanent());
+    }
+
+    public function testBlockedBounceClassification()
+    {
+        $payload = $this->bouncePayload();
+        $payload['Type'] = 'Blocked';
+
+        $adapter = new Postmark($payload);
+
+        $this->assertSame(EmailEvent::BOUNCE_BLOCK, $adapter->getBounceType());
+        $this->assertTrue($adapter->isPermanent());
+    }
+
+    public function testUnknownBounceTypeDefaultsToSoft()
+    {
+        $payload = $this->bouncePayload();
+        $payload['Type'] = 'SomeFutureBounceType';
+
+        $adapter = new Postmark($payload);
+
+        $this->assertSame(EmailEvent::BOUNCE_SOFT, $adapter->getBounceType());
+        $this->assertFalse($adapter->isPermanent());
     }
 }

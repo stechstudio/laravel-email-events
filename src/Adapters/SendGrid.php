@@ -123,6 +123,30 @@ class SendGrid extends AbstractAdapter
     }
 
     /**
+     * SendGrid splits failures across separate events: "dropped" (SendGrid
+     * refused to send — always permanent) and "bounce" (carries a "type" of
+     * either "bounce" or "blocked").
+     *
+     * @return string|null
+     */
+    public function getBounceType()
+    {
+        $event = Arr::get($this->payload, 'event');
+
+        if ($event === 'dropped') {
+            return EmailEvent::BOUNCE_HARD;
+        }
+
+        if ($event !== 'bounce') {
+            return null;
+        }
+
+        return Arr::get($this->payload, 'type') === 'blocked'
+            ? EmailEvent::BOUNCE_BLOCK
+            : EmailEvent::BOUNCE_HARD;
+    }
+
+    /**
      * @param array $payload
      *
      * @return bool

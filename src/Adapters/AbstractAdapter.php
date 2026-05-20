@@ -4,6 +4,7 @@ namespace STS\EmailEvents\Adapters;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use STS\EmailEvents\EmailEvent;
 
 abstract class AbstractAdapter
 {
@@ -87,6 +88,27 @@ abstract class AbstractAdapter
      * @return mixed
      */
     abstract public function getCode();
+
+    /**
+     * Normalized bounce severity, or null when this is not a bounce.
+     *
+     * @return string|null one of EmailEvent::BOUNCE_HARD|BOUNCE_SOFT|BOUNCE_BLOCK
+     */
+    abstract public function getBounceType();
+
+    /**
+     * Whether this event represents a permanent failure — a hard bounce or a
+     * block. These are safe to suppress; soft bounces are not.
+     *
+     * @return bool
+     */
+    public function isPermanent()
+    {
+        return in_array($this->getBounceType(), [
+            EmailEvent::BOUNCE_HARD,
+            EmailEvent::BOUNCE_BLOCK,
+        ], true);
+    }
 
     /**
      * @return Collection

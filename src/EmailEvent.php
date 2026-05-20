@@ -21,6 +21,8 @@ use STS\EmailEvents\Adapters\AbstractAdapter;
  * @method Collection getTags()
  * @method Collection getData()
  * @method array getPayload()
+ * @method string|null getBounceType()
+ * @method bool isPermanent()
  */
 class EmailEvent
 {
@@ -35,6 +37,10 @@ class EmailEvent
     const EVENT_COMPLAINED = "complained";
     const EVENT_OPENED = "opened";
     const EVENT_CLICKED = "clicked";
+
+    const BOUNCE_HARD = "hard";   // permanent — safe to suppress
+    const BOUNCE_SOFT = "soft";   // transient — retry later
+    const BOUNCE_BLOCK = "block"; // blocked by reputation/policy
 
     /**
      * @var AbstractAdapter
@@ -98,6 +104,7 @@ class EmailEvent
             'response'  => $this->adapter->getResponse(),
             'reason'    => $this->adapter->getReason(),
             'code'      => $this->adapter->getCode(),
+            'bounceType' => $this->adapter->getBounceType(),
         ];
     }
 }

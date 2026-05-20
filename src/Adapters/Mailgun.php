@@ -114,6 +114,22 @@ class Mailgun extends AbstractAdapter
     }
 
     /**
+     * Mailgun "failed" events carry a severity of "permanent" or "temporary".
+     *
+     * @return string|null
+     */
+    public function getBounceType()
+    {
+        if ($this->getAction() !== EmailEvent::EVENT_BOUNCED) {
+            return null;
+        }
+
+        return Arr::get($this->payload, 'severity') === 'permanent'
+            ? EmailEvent::BOUNCE_HARD
+            : EmailEvent::BOUNCE_SOFT;
+    }
+
+    /**
      * @param array $payload
      *
      * @return bool

@@ -104,6 +104,39 @@ class MailgunAdapterTest extends TestCase
             'response'  => 'OK',
             'reason'    => null,
             'code'      => 250,
+            'bounceType' => null,
         ], $event->toArray());
+    }
+
+    public function testBounceTypeNullForNonBounce()
+    {
+        $adapter = new Mailgun($this->deliveredPayload());
+
+        $this->assertNull($adapter->getBounceType());
+        $this->assertFalse($adapter->isPermanent());
+    }
+
+    public function testPermanentFailureClassifiedAsHard()
+    {
+        $payload = $this->deliveredPayload();
+        $payload['event-data']['event'] = 'failed';
+        $payload['event-data']['severity'] = 'permanent';
+
+        $adapter = new Mailgun($payload);
+
+        $this->assertSame(EmailEvent::BOUNCE_HARD, $adapter->getBounceType());
+        $this->assertTrue($adapter->isPermanent());
+    }
+
+    public function testTemporaryFailureClassifiedAsSoft()
+    {
+        $payload = $this->deliveredPayload();
+        $payload['event-data']['event'] = 'failed';
+        $payload['event-data']['severity'] = 'temporary';
+
+        $adapter = new Mailgun($payload);
+
+        $this->assertSame(EmailEvent::BOUNCE_SOFT, $adapter->getBounceType());
+        $this->assertFalse($adapter->isPermanent());
     }
 }

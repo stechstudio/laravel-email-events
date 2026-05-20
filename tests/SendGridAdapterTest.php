@@ -91,6 +91,50 @@ class SendGridAdapterTest extends TestCase
             'response'  => '250 OK',
             'reason'    => null,
             'code'      => '2.0.0',
+            'bounceType' => null,
         ], $event->toArray());
+    }
+
+    public function testBounceTypeNullForNonBounce()
+    {
+        $adapter = new SendGrid($this->deliveredPayload());
+
+        $this->assertNull($adapter->getBounceType());
+        $this->assertFalse($adapter->isPermanent());
+    }
+
+    public function testHardBounceClassification()
+    {
+        $payload = $this->deliveredPayload();
+        $payload['event'] = 'bounce';
+        $payload['type'] = 'bounce';
+
+        $adapter = new SendGrid($payload);
+
+        $this->assertSame(EmailEvent::BOUNCE_HARD, $adapter->getBounceType());
+        $this->assertTrue($adapter->isPermanent());
+    }
+
+    public function testBlockedBounceClassification()
+    {
+        $payload = $this->deliveredPayload();
+        $payload['event'] = 'bounce';
+        $payload['type'] = 'blocked';
+
+        $adapter = new SendGrid($payload);
+
+        $this->assertSame(EmailEvent::BOUNCE_BLOCK, $adapter->getBounceType());
+        $this->assertTrue($adapter->isPermanent());
+    }
+
+    public function testDroppedEventClassifiedAsHard()
+    {
+        $payload = $this->deliveredPayload();
+        $payload['event'] = 'dropped';
+
+        $adapter = new SendGrid($payload);
+
+        $this->assertSame(EmailEvent::BOUNCE_HARD, $adapter->getBounceType());
+        $this->assertTrue($adapter->isPermanent());
     }
 }

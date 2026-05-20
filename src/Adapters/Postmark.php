@@ -106,11 +106,44 @@ class Postmark extends AbstractAdapter
     }
 
     /**
+     * Postmark bounce taxonomy (the "Type" field on a Bounce webhook).
+     *
+     * @var array
+     */
+    protected $bounceTypeMap = [
+        'HardBounce'          => EmailEvent::BOUNCE_HARD,
+        'BadEmailAddress'     => EmailEvent::BOUNCE_HARD,
+        'ManuallyDeactivated' => EmailEvent::BOUNCE_HARD,
+        'SoftBounce'          => EmailEvent::BOUNCE_SOFT,
+        'DnsError'            => EmailEvent::BOUNCE_SOFT,
+        'SMTPApiError'        => EmailEvent::BOUNCE_SOFT,
+        'Blocked'             => EmailEvent::BOUNCE_BLOCK,
+        'SpamNotification'    => EmailEvent::BOUNCE_BLOCK,
+        'VirusNotification'   => EmailEvent::BOUNCE_BLOCK,
+    ];
+
+    /**
      * @return mixed
      */
     public function getReason()
     {
         return Arr::get($this->payload, 'Type');
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBounceType()
+    {
+        if ($this->getAction() !== EmailEvent::EVENT_BOUNCED) {
+            return null;
+        }
+
+        return Arr::get(
+            $this->bounceTypeMap,
+            Arr::get($this->payload, 'Type'),
+            EmailEvent::BOUNCE_SOFT
+        );
     }
 
     /**
