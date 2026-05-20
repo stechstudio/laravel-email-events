@@ -2,6 +2,7 @@
     "name": "stechstudio/laravel-email-events",
     "description": "Handle email event webhooks",
     "license": "MIT",
+    "abandoned": "stechstudio/laravel-postmaster",
     "authors": [
         {
             "name": "Joseph Szobody",

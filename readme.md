@@ -1,3 +1,20 @@
+> # 📦 This package has moved
+>
+> `stechstudio/laravel-email-events` has been renamed to **[`stechstudio/laravel-postmaster`](https://github.com/stechstudio/laravel-postmaster)**.
+>
+> Version `0.14` (documented below) is the final release under this name. It will keep working, but all new development — including persistence, multitenancy, and additional providers — happens in the new package.
+>
+> To upgrade:
+>
+> ```bash
+> composer remove stechstudio/laravel-email-events
+> composer require stechstudio/laravel-postmaster
+> ```
+>
+> See the [upgrade guide](https://github.com/stechstudio/laravel-postmaster/blob/master/UPGRADE.md) for the namespace and config changes.
+
+---
+
 # Email event webhook processing
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/stechstudio/laravel-email-events.svg?style=flat-square)](https://packagist.org/packages/stechstudio/laravel-email-events)
