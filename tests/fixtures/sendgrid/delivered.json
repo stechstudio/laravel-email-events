@@ -1,0 +1,11 @@
+{
+    "email": "recipient@example.com",
+    "event": "delivered",
+    "timestamp": 1609459200,
+    "smtp-id": "<message-id@example.com>",
+    "sg_event_id": "sg-event-1",
+    "sg_message_id": "sg-message-1",
+    "status": "2.0.0",
+    "response": "250 OK",
+    "category": ["newsletter", "welcome"]
+}

@@ -1,0 +1,11 @@
+{
+    "email": "recipient@example.com",
+    "event": "bounce",
+    "type": "bounce",
+    "timestamp": 1609459200,
+    "smtp-id": "<message-id@example.com>",
+    "sg_event_id": "sg-event-2",
+    "sg_message_id": "sg-message-2",
+    "status": "5.1.1",
+    "reason": "550 5.1.1 The email account does not exist"
+}

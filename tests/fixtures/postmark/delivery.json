@@ -1,0 +1,9 @@
+{
+    "RecordType": "Delivery",
+    "MessageID": "postmark-message-1",
+    "Recipient": "recipient@example.com",
+    "DeliveredAt": "2021-01-01T00:00:00Z",
+    "Details": "smtp;250 2.0.0 OK",
+    "Tag": "welcome",
+    "Metadata": {"order_id": "1234"}
+}

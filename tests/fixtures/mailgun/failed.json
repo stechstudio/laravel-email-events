@@ -1,0 +1,19 @@
+{
+    "signature": {
+        "token": "signature-token",
+        "timestamp": "1609459200",
+        "signature": "signature-hash"
+    },
+    "event-data": {
+        "event": "failed",
+        "id": "mailgun-message-2",
+        "recipient": "recipient@example.com",
+        "timestamp": 1609459200,
+        "severity": "permanent",
+        "reason": "bounce",
+        "delivery-status": {
+            "code": 550,
+            "message": "mailbox not found"
+        }
+    }
+}

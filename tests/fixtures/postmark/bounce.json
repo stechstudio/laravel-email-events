@@ -1,0 +1,9 @@
+{
+    "RecordType": "Bounce",
+    "Type": "HardBounce",
+    "TypeCode": 1,
+    "MessageID": "postmark-message-2",
+    "Email": "recipient@example.com",
+    "BouncedAt": "2021-01-01T00:00:00Z",
+    "Details": "smtp;550 5.1.1 mailbox does not exist"
+}

@@ -1,0 +1,20 @@
+{
+    "signature": {
+        "token": "signature-token",
+        "timestamp": "1609459200",
+        "signature": "signature-hash"
+    },
+    "event-data": {
+        "event": "delivered",
+        "id": "mailgun-message-1",
+        "recipient": "recipient@example.com",
+        "timestamp": 1609459200,
+        "tags": ["welcome", "newsletter"],
+        "user-variables": {"order_id": "1234"},
+        "delivery-status": {
+            "code": 250,
+            "description": "OK",
+            "message": "queued as ABC123"
+        }
+    }
+}
