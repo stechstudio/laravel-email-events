@@ -11,7 +11,8 @@
 > composer require stechstudio/laravel-postmaster
 > ```
 >
-> See the [upgrade guide](https://github.com/stechstudio/laravel-postmaster/blob/master/UPGRADE.md) for the namespace and config changes.
+> The namespace, config, and env names changed in the new package — see the
+> [laravel-postmaster README](https://github.com/stechstudio/laravel-postmaster#readme) for setup.
 
 ---
 
