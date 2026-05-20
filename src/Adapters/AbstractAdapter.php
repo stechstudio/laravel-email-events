@@ -111,6 +111,22 @@ abstract class AbstractAdapter
     }
 
     /**
+     * The event timestamp as a DateTimeImmutable (UTC), or null when the
+     * provider did not supply a usable timestamp. Convenience wrapper around
+     * getTimestamp(), which returns the raw unix integer.
+     *
+     * @return \DateTimeImmutable|null
+     */
+    public function getDate()
+    {
+        $timestamp = $this->getTimestamp();
+
+        return is_int($timestamp)
+            ? new \DateTimeImmutable('@' . $timestamp)
+            : null;
+    }
+
+    /**
      * @return Collection
      */
     abstract public function getTags();

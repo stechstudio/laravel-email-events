@@ -54,6 +54,17 @@ class MailgunAdapterTest extends TestCase
         $this->assertSame('OK', $adapter->getResponse());
     }
 
+    public function testGetDate()
+    {
+        $adapter = new Mailgun($this->deliveredPayload());
+
+        $date = $adapter->getDate();
+
+        $this->assertInstanceOf(\DateTimeImmutable::class, $date);
+        $this->assertSame(1609459200, $date->getTimestamp());
+        $this->assertSame('2021-01-01T00:00:00+00:00', $date->format(\DateTimeInterface::ATOM));
+    }
+
     public function testResponseFallsBackToMessage()
     {
         $payload = $this->deliveredPayload();
@@ -97,6 +108,7 @@ class MailgunAdapterTest extends TestCase
             'provider'  => 'Mailgun',
             'event'     => EmailEvent::EVENT_DELIVERED,
             'timestamp' => 1609459200,
+            'date'      => '2021-01-01T00:00:00+00:00',
             'recipient' => 'recipient@example.com',
             'messageId' => 'mailgun-message-1',
             'tags'      => ['welcome', 'newsletter'],

@@ -104,6 +104,14 @@ class EmailEvent
     }
 
     /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getDate()
+    {
+        return $this->adapter->getDate();
+    }
+
+    /**
      * @return mixed
      */
     public function getResponse()
@@ -176,6 +184,7 @@ class EmailEvent
             'provider'  => $this->adapter->getProvider(),
             'event'     => $this->adapter->getAction(),
             'timestamp' => $this->adapter->getTimestamp(),
+            'date'      => $this->adapter->getDate()?->format(\DateTimeInterface::ATOM),
             'recipient' => $this->adapter->getRecipient(),
             'messageId' => $this->adapter->getMessageId(),
             'tags'      => $this->adapter->getTags()->toArray(),

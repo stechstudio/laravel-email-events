@@ -56,6 +56,27 @@ class PostmarkAdapterTest extends TestCase
         $this->assertNull($adapter->getCode());
     }
 
+    public function testGetDate()
+    {
+        $adapter = new Postmark($this->deliveryPayload());
+
+        $date = $adapter->getDate();
+
+        $this->assertInstanceOf(\DateTimeImmutable::class, $date);
+        $this->assertSame('2021-01-01T00:00:00+00:00', $date->format(\DateTimeInterface::ATOM));
+    }
+
+    public function testGetDateIsNullWithoutTimestamp()
+    {
+        $payload = $this->deliveryPayload();
+        unset($payload['DeliveredAt']);
+
+        $adapter = new Postmark($payload);
+
+        $this->assertNull($adapter->getTimestamp());
+        $this->assertNull($adapter->getDate());
+    }
+
     public function testParsesBounceEvent()
     {
         $adapter = new Postmark($this->bouncePayload());
@@ -105,6 +126,7 @@ class PostmarkAdapterTest extends TestCase
             'provider'  => 'Postmark',
             'event'     => EmailEvent::EVENT_DELIVERED,
             'timestamp' => strtotime('2021-01-01T00:00:00Z'),
+            'date'      => '2021-01-01T00:00:00+00:00',
             'recipient' => 'recipient@example.com',
             'messageId' => 'postmark-message-1',
             'tags'      => ['welcome'],
