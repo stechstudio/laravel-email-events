@@ -43,7 +43,7 @@ class Mailgun extends AbstractAdapter
      */
     public function getAction()
     {
-        return array_get($this->eventMap, Arr::get($this->payload, 'event'));
+        return Arr::get($this->eventMap, Arr::get($this->payload, 'event'));
     }
 
     /**
