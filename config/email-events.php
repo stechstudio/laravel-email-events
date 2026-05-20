@@ -20,7 +20,7 @@ return [
     'authorizers' => [
         'token' => \STS\EmailEvents\Auth\TokenAuth::class,
         'basic' => \STS\EmailEvents\Auth\BasicHttpAuth::class,
-        'signature' => \STS\EmailEvents\Auth\SignatureAuth::class,
+        'signature' => \STS\EmailEvents\Auth\MailgunSignatureAuth::class,
         'user-agent' => \STS\EmailEvents\Auth\UserAgentAuth::class
     ],
 
