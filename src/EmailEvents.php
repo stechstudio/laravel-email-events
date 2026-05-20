@@ -33,7 +33,8 @@ class EmailEvents
         return new Provider(
             $name,
             Arr::get($this->config, "providers.$name.adapter"),
-            $this->getAuthorizer(Arr::get($this->config, "providers.$name.auth"))
+            $this->getAuthorizer(Arr::get($this->config, "providers.$name.auth")),
+            Arr::get($this->config, 'on_invalid', 'log')
         );
     }
 

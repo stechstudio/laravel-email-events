@@ -11,6 +11,12 @@ return [
 
     'signature_key' => env('MAIL_EVENTS_SIGNATURE_KEY', env('MAILGUN_SECRET')),
 
+    /*
+     * What to do with a webhook payload that no adapter can turn into a valid
+     * event: "log" a warning, "throw" an exception, or silently "ignore" it.
+     */
+    'on_invalid' => env('MAIL_EVENTS_ON_INVALID', 'log'),
+
     'authorizers' => [
         'token' => \STS\EmailEvents\Auth\TokenAuth::class,
         'basic' => \STS\EmailEvents\Auth\BasicHttpAuth::class,

@@ -3,6 +3,7 @@
 namespace STS\EmailEvents;
 
 use Illuminate\Http\Request;
+use STS\EmailEvents\Exceptions\InvalidEventException;
 use STS\EmailEvents\Exceptions\UnauthorizedException;
 
 /**
@@ -19,6 +20,9 @@ class Provider
     /** @var callable */
     protected $authorizer;
 
+    /** @var string */
+    protected $onInvalid;
+
     /** @var array */
     protected $events = [];
 
@@ -26,12 +30,14 @@ class Provider
      * @param               $name
      * @param               $adapterClass
      * @param callable      $authorizer
+     * @param string        $onInvalid
      */
-    public function __construct( $name, $adapterClass, callable $authorizer )
+    public function __construct( $name, $adapterClass, callable $authorizer, $onInvalid = 'log' )
     {
         $this->name = $name;
         $this->adapterClass = $adapterClass;
         $this->authorizer = $authorizer;
+        $this->onInvalid = $onInvalid;
     }
 
     /**
@@ -56,14 +62,40 @@ class Provider
     public function adapt( array $payload )
     {
         foreach ($this->wrapPayload($payload) AS $data) {
-            $this->events[] = EmailEvent::create(
-                new $this->adapterClass($data)
-            );
+            $adapter = new $this->adapterClass($data);
+            $event = EmailEvent::create($adapter);
+
+            if ($event) {
+                $this->events[] = $event;
+            } else {
+                $this->handleInvalid($adapter);
+            }
         }
 
-        $this->events = array_filter($this->events);
-
         return $this;
+    }
+
+    /**
+     * Handle a payload that no adapter could turn into a valid event.
+     *
+     * @param Adapters\AbstractAdapter $adapter
+     *
+     * @return void
+     */
+    protected function handleInvalid( $adapter )
+    {
+        if ($this->onInvalid === 'ignore') {
+            return;
+        }
+
+        if ($this->onInvalid === 'throw') {
+            throw new InvalidEventException($adapter->getPayload());
+        }
+
+        logger()->warning('Dropped invalid email event payload', [
+            'provider' => $this->name,
+            'payload'  => $adapter->getPayload(),
+        ]);
     }
 
     /**
@@ -80,6 +112,14 @@ class Provider
         return array_keys($payload) == range(0, count($payload) - 1)
             ? $payload
             : [$payload];
+    }
+
+    /**
+     * @return EmailEvent[]
+     */
+    public function getEvents()
+    {
+        return $this->events;
     }
 
     /**
