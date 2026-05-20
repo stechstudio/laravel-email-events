@@ -9,20 +9,6 @@ use STS\EmailEvents\Adapters\AbstractAdapter;
 /**
  * Class EmailEvent
  * @package STS\EmailEventParser
- *
- * @method string getProvider()
- * @method string getAction()
- * @method string getMessageId()
- * @method string getRecipient()
- * @method int getTimestamp()
- * @method string getResponse()
- * @method string getReason()
- * @method mixed getCode()
- * @method Collection getTags()
- * @method Collection getData()
- * @method array getPayload()
- * @method string|null getBounceType()
- * @method bool isPermanent()
  */
 class EmailEvent
 {
@@ -78,14 +64,107 @@ class EmailEvent
     }
 
     /**
-     * @param $method
-     * @param $parameters
-     *
+     * @return string
+     */
+    public function getProvider()
+    {
+        return $this->adapter->getProvider();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAction()
+    {
+        return $this->adapter->getAction();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMessageId()
+    {
+        return $this->adapter->getMessageId();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRecipient()
+    {
+        return $this->adapter->getRecipient();
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getTimestamp()
+    {
+        return $this->adapter->getTimestamp();
+    }
+
+    /**
      * @return mixed
      */
-    public function __call( $method, $parameters )
+    public function getResponse()
     {
-        return call_user_func_array([$this->adapter, $method], $parameters);
+        return $this->adapter->getResponse();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getReason()
+    {
+        return $this->adapter->getReason();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCode()
+    {
+        return $this->adapter->getCode();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getTags()
+    {
+        return $this->adapter->getTags();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getData()
+    {
+        return $this->adapter->getData();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBounceType()
+    {
+        return $this->adapter->getBounceType();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPermanent()
+    {
+        return $this->adapter->isPermanent();
+    }
+
+    /**
+     * @return array
+     */
+    public function getPayload()
+    {
+        return $this->adapter->getPayload();
     }
 
     /**
